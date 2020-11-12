@@ -15,7 +15,7 @@ const findAll = async (req, res) => {
       .orderBy('kode_gedung', 'ASC')
     return responseHelper.responseOk(buildingsResult, 'Success', res)
   } catch (err) {
-    return responseHelper.responseOk('', 'Building not found', res)
+    return responseHelper.responseNotFound('', 'Building not found', res)
   }
 }
 
@@ -74,7 +74,7 @@ const update = async (req, res) => {
     return responseHelper.responseOk(buildingResult, 'Successfully update building', res)
   } catch (err) {
     if (err.message === 'Not found') {
-      return responseHelper.responseBadRequest('', 'Building not found', res)
+      return responseHelper.responseNotFound('', 'Building not found', res)
     }
     return responseHelper.responseBadRequest('', 'Bad Request', res)
   }
@@ -94,7 +94,6 @@ const destroy = async (req, res) => {
       .where('kode_gedung', '=', building.kode_gedung)
     return responseHelper.responseOk(buildingResult, 'Successfully delete building', res)
   } catch (err) {
-    console.log(err)
     return responseHelper.responseNotFound('', 'Building not ound', res)
   }
 }
