@@ -12,7 +12,7 @@ class StudyProgramModel extends Model {
   static get relationMappings () {
     return {
       studyPrograms: {
-        relation: Model.HasManyRelation,
+        relation: Model.BelongsToOneRelation,
         modelClass: MajoringModel,
         join: {
           from: 't_program_studi.id_jurusan',
