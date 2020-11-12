@@ -1,13 +1,13 @@
 const responseHelper = require('../helper/response-helper')
-const roomModel = require('../models/RoomModel')
+const RoomRepo = require('../models/RoomModel')
 
-const getAll = async (req, res) => {
-  const buildings = await roomModel
+const findAll = async (req, res) => {
+  const buildings = await RoomRepo
     .query()
     .orderBy('kode_ruang', 'ASC')
   return responseHelper.responseOk(buildings, 'Success', res)
 }
 
 module.exports = {
-  getAll
+  findAll
 }

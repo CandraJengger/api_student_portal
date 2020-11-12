@@ -1,7 +1,7 @@
 const Router = require('express').Router
 const r = Router()
-const roomController = require('../controllers/room-controller')
+const roomService = require('../service/room-service')
 
-r.get('/', roomController.getAll)
+r.get('/', roomService.findAll)
 
 module.exports = r

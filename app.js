@@ -2,11 +2,14 @@ require('dotenv').config()
 
 const bodyParser = require('body-parser')
 const express = require('express')
+const helmet = require('helmet')
+
 const buildingRoutes = require('./routes/building-routes')
 const roomRoutes = require('./routes/room-routes')
 
 const app = express()
 
+app.use(helmet())
 app.use(bodyParser.json({ type: 'application/json' }))
 app.use('/buildings', buildingRoutes)
 app.use('/rooms', roomRoutes)
