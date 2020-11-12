@@ -1,4 +1,3 @@
-const { responseNotFound } = require('../helper/response-helper')
 const responseHelper = require('../helper/response-helper')
 const BuildingModel = require('../models/BuildingModel')
 
@@ -16,7 +15,7 @@ const findAll = async (req, res) => {
       .orderBy('kode_gedung', 'ASC')
     return responseHelper.responseOk(buildingsResult, 'Success', res)
   } catch (err) {
-    return responseNotFound.responseOk('', 'Error Not Found', res)
+    return responseHelper.responseOk('', 'Building not found', res)
   }
 }
 
@@ -30,7 +29,7 @@ const findById = async (req, res) => {
 
     return responseHelper.responseOk(buildingResult, 'Success', res)
   } catch (err) {
-    return responseHelper.responseNotFound('', 'Error Not Found', res)
+    return responseHelper.responseNotFound('', 'Building not found', res)
   }
 }
 
@@ -75,7 +74,7 @@ const update = async (req, res) => {
     return responseHelper.responseOk(buildingResult, 'Successfully update building', res)
   } catch (err) {
     if (err.message === 'Not found') {
-      return responseHelper.responseBadRequest('', 'Not Found', res)
+      return responseHelper.responseBadRequest('', 'Building not found', res)
     }
     return responseHelper.responseBadRequest('', 'Bad Request', res)
   }
@@ -96,11 +95,12 @@ const destroy = async (req, res) => {
     return responseHelper.responseOk(buildingResult, 'Successfully delete building', res)
   } catch (err) {
     console.log(err)
-    return responseHelper.responseNotFound('', 'Error Not Found', res)
+    return responseHelper.responseNotFound('', 'Building not ound', res)
   }
 }
 
 module.exports = {
+  isExist,
   findAll,
   findById,
   insert,
