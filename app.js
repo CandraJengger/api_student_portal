@@ -6,13 +6,18 @@ const helmet = require('helmet')
 
 const buildingRoutes = require('./routes/building-routes')
 const roomRoutes = require('./routes/room-routes')
+const majoringRoutes = require('./routes/majoring-routes')
+const studyProgramRoutes = require('./routes/study-program-routes')
 
 const app = express()
 
 app.use(helmet())
 app.use(bodyParser.json({ type: 'application/json' }))
+
 app.use('/buildings', buildingRoutes)
 app.use('/rooms', roomRoutes)
+app.use('/majorings', majoringRoutes)
+app.use('/studyPrograms', studyProgramRoutes)
 
 const start = () => {
   app.listen(process.env.APP_PORT, process.env.APP_HOST, () => {
