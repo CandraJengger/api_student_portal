@@ -3,10 +3,10 @@ const hashHelper = require('../helper/hash-helper')
 const StudentAccountModel = require('../models/StudentAccountModel')
 
 const isExist = async (id) => {
-  const batchResult = await StudentAccountModel
+  const studentAccountResult = await StudentAccountModel
     .query()
     .where('npm', '=', id)
-  return batchResult
+  return studentAccountResult
 }
 
 let encryptionPassword = ''
