@@ -7,6 +7,7 @@ const isExist = async (id) => {
   const scheduleResult = await ClassScheduleModel
     .query()
     .where('kode_jadwal', '=', id)
+    .withGraphJoined('courses')
   return scheduleResult
 }
 

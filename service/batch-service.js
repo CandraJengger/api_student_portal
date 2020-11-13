@@ -95,7 +95,7 @@ const destroy = async (req, res) => {
       .where('kode_angkatan', '=', batch.kode_angkatan)
     return responseHelper.responseOk(batchResult, 'Successfully delete batch', res)
   } catch (err) {
-    return responseHelper.responseNotFound('', 'Batch not ound', res)
+    return responseHelper.responseNotFound('', 'Batch not found', res)
   }
 }
 

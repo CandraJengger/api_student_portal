@@ -9,6 +9,8 @@ const isExist = async (id) => {
   return lecturerAccountResult
 }
 
+let encryptionPassword = ''
+
 const findAll = async (req, res) => {
   try {
     const lecturerAccountsResult = await LecturerModel
@@ -43,7 +45,7 @@ const insert = async (req, res) => {
       throw new Error('Exist')
     }
 
-    const encryptionPassword = hashHelper.generateHash(lecturerAccount.password_dosen)
+    encryptionPassword = hashHelper.generateHash(lecturerAccount.password_dosen)
 
     const newLecturerAccount = await LecturerModel
       .query()
@@ -71,7 +73,7 @@ const update = async (req, res) => {
       throw new Error('Not found')
     }
 
-    const encryptionPassword = hashHelper.generateHash(lecturerAccount.password_dosen)
+    encryptionPassword = hashHelper.generateHash(lecturerAccount.password_dosen)
 
     const lecturerAccountResult = await LecturerModel
       .query()
