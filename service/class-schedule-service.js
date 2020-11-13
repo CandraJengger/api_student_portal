@@ -14,7 +14,7 @@ const findAll = async (req, res) => {
   try {
     const schedulesResult = await ClassScheduleModel
       .query()
-      .withGraphJoined('courses')
+      .orderBy('kode_jadwal', 'ASC')
     return responseHelper.responseOk(schedulesResult, 'Success', res)
   } catch (err) {
     return responseHelper.responseNotFound('', 'Error Not Found', res)
