@@ -15,8 +15,8 @@ class LecturerAccountModel extends Model {
         relation: Model.HasManyRelation,
         modelClass: ClassScheduleModel,
         join: {
-          from: 't_akun_dosen.id_dosen',
-          to: 't_jadwal_kuliah.id_dosen'
+          from: 't_akun_dosen.NIP_dosen',
+          to: 't_jadwal_kuliah.NIP_dosen'
         }
       }
     }
