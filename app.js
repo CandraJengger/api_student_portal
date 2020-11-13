@@ -10,6 +10,7 @@ const majoringRoutes = require('./routes/majoring-routes')
 const studyProgramRoutes = require('./routes/study-program-routes')
 const semesterRoutes = require('./routes/semester-routes')
 const batchRoutes = require('./routes/batch-routes')
+const lecturerRoutes = require('./routes/lecturer-account-routes')
 
 const app = express()
 
@@ -22,6 +23,7 @@ app.use('/majorings', majoringRoutes)
 app.use('/studyPrograms', studyProgramRoutes)
 app.use('/semesters', semesterRoutes)
 app.use('/batchs', batchRoutes)
+app.use('/lecturerAccounts', lecturerRoutes)
 
 const start = () => {
   app.listen(process.env.APP_PORT, process.env.APP_HOST, () => {
