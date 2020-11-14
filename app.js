@@ -17,6 +17,7 @@ const classRoutes = require('./routes/class-routes')
 const lecturesRoutes = require('./routes/lectures-routes')
 const studentAccountRoutes = require('./routes/student-account-routes')
 const adminAccountRoutes = require('./routes/admin-account-routes')
+const studentStatusRoutes = require('./routes/student-status-routes')
 
 const app = express()
 
@@ -36,6 +37,7 @@ app.use('/classLectures', classRoutes)
 app.use('/lectures', lecturesRoutes)
 app.use('/studentAccounts', studentAccountRoutes)
 app.use('/adminAccounts', adminAccountRoutes)
+app.use('/studentStatus', studentStatusRoutes)
 
 const start = () => {
   app.listen(process.env.APP_PORT, process.env.APP_HOST, () => {

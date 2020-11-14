@@ -161,7 +161,7 @@ const destroy = async (req, res) => {
     const lecturesResult = await LecturesModel
       .query()
       .delete()
-      .where('kode_jadwal', '=', lectures.kode_perkuliahan)
+      .where('kode_perkuliahan', '=', lectures.kode_perkuliahan)
     return responseHelper.responseOk(lecturesResult, 'Successfully delete lectures', res)
   } catch (err) {
     return responseHelper.responseNotFound('', 'Lectures not found', res)
