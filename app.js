@@ -21,6 +21,7 @@ const studentAccountRoutes = require('./src/routes/student-account-routes')
 const adminAccountRoutes = require('./src/routes/admin-account-routes')
 const studentStatusRoutes = require('./src/routes/student-status-routes')
 const presenceRoutes = require('./src/routes/presence-routes')
+const uktRoutes = require('./src/routes/ukt-routes')
 
 const app = express()
 
@@ -45,6 +46,7 @@ app.use('/studentAccounts', studentAccountRoutes)
 app.use('/adminAccounts', adminAccountRoutes)
 app.use('/studentStatus', studentStatusRoutes)
 app.use('/presence', presenceRoutes)
+app.use('/ukt', uktRoutes)
 
 const start = () => {
   app.listen(process.env.APP_PORT, process.env.APP_HOST, () => {
