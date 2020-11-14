@@ -15,6 +15,7 @@ const findAll = async (req, res) => {
       .orderBy('nama_jurusan', 'ASC')
     return responseHelper.responseOk(majoringsResult, 'Success', res)
   } catch (err) {
+    console.log(err)
     return responseHelper.responseNotFound('', 'Majoring not found', res)
   }
 }

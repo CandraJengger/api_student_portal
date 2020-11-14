@@ -1,3 +1,8 @@
-require('dotenv').config()
+// const HashHelper = require('./helper/hash-helper')
 
-console.log(process.env.DB_USER)
+// const result = HashHelper.generateHash('12345')
+
+// const resultCompare = HashHelper.compareHash('12345', result)
+
+// console.log(resultCompare)
+console.log()
