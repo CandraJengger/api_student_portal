@@ -11,7 +11,7 @@ class UKTModel extends Model {
 
   static get relationMappings () {
     return {
-      studyPrograms: {
+      admin: {
         relation: Model.BelongsToOneRelation,
         modelClass: AdminAccountModel,
         join: {
