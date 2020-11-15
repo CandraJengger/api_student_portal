@@ -3,6 +3,7 @@ const knex = require('../db/connection')
 const StudentStatusModel = require('./StudentStatusModel')
 const PresenceModel = require('./PresenceModel')
 const UKTModel = require('./UKTModel')
+const ReRegistrationModel = require('./Re-registrationModel')
 
 Model.knex(knex)
 
@@ -35,6 +36,14 @@ class AdminAccountModel extends Model {
         join: {
           from: 't_admin.id_admin',
           to: 't_ukt.id_admin'
+        }
+      },
+      reRegistrations: {
+        relation: Model.HasManyRelation,
+        modelClass: ReRegistrationModel,
+        join: {
+          from: 't_admin.id_admin',
+          to: 't_daftar_ulang.id_admin'
         }
       }
     }
