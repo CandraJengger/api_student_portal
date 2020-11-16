@@ -21,6 +21,8 @@ const annoncementRoutes = require('./announcement-routes')
 const questionnaireRoutes = require('./questionnaire-routes')
 const graduationRoutes = require('./graduation-routes')
 const internshipRoutes = require('./internship-routes')
+const skillsRoutes = require('./skills-routes')
+const achievementRoutes = require('./achievement-routes')
 
 const routes = app => {
   app.use('/uploads', express.static('../../public/uploads'))
@@ -46,6 +48,8 @@ const routes = app => {
   app.use('/questionnaire', questionnaireRoutes)
   app.use('/graduations', graduationRoutes)
   app.use('/internship', internshipRoutes)
+  app.use('/skills', skillsRoutes)
+  app.use('/achievement', achievementRoutes)
 }
 
 module.exports = routes
