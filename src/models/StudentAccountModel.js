@@ -1,6 +1,7 @@
 const { Model } = require('objection')
 const knex = require('../db/connection')
 const StudentStatusModel = require('./StudentStatusModel')
+const GraduationModel = require('./GraduationModel')
 
 Model.knex(knex)
 
@@ -17,6 +18,14 @@ class StudentAccountModel extends Model {
         join: {
           from: 't_akun_mhs.npm',
           to: 't_status_mhs.npm'
+        }
+      },
+      graduations: {
+        relation: Model.HasManyRelation,
+        modelClass: GraduationModel,
+        join: {
+          from: 't_akun_mhs.npm',
+          to: 't_wisuda.npm'
         }
       }
     }
