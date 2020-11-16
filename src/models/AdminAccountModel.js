@@ -4,6 +4,8 @@ const StudentStatusModel = require('./StudentStatusModel')
 const PresenceModel = require('./PresenceModel')
 const UKTModel = require('./UKTModel')
 const ReRegistrationModel = require('./Re-registrationModel')
+const AnnouncementModel = require('./AnnouncementModel')
+const QuestionnaireModel = require('./QuestionnaireModel')
 
 Model.knex(knex)
 
@@ -44,6 +46,22 @@ class AdminAccountModel extends Model {
         join: {
           from: 't_admin.id_admin',
           to: 't_daftar_ulang.id_admin'
+        }
+      },
+      announcement: {
+        relation: Model.HasManyRelation,
+        modelClass: AnnouncementModel,
+        join: {
+          from: 't_admin.id_admin',
+          to: 't_pengumuman.id_admin'
+        }
+      },
+      questionnaire: {
+        relation: Model.HasManyRelation,
+        modelClass: QuestionnaireModel,
+        join: {
+          from: 't_admin.id_admin',
+          to: 't_kuesioner.id_admin'
         }
       }
     }
