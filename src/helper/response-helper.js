@@ -47,7 +47,7 @@ const responseInternalServerError = (values, message, result) => {
     .status(200)
     .header('Content-Type', 'application/json; charset=utf-8')
     .send({
-      code: 403,
+      code: 500,
       values: values,
       message: message
     })
