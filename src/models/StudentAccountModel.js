@@ -3,6 +3,7 @@ const knex = require('../db/connection')
 const StudentStatusModel = require('./StudentStatusModel')
 const GraduationModel = require('./GraduationModel')
 const InternshipModel = require('./InternshipModel')
+const AchievementModel = require('./AchievementModel')
 
 Model.knex(knex)
 
@@ -35,6 +36,14 @@ class StudentAccountModel extends Model {
         join: {
           from: 't_akun_mhs.npm',
           to: 't_magang.npm'
+        }
+      },
+      achievement: {
+        relation: Model.HasManyRelation,
+        modelClass: AchievementModel,
+        join: {
+          from: 't_akun_mhs.npm',
+          to: 't_prestasi.npm'
         }
       }
     }
