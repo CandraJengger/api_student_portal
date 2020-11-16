@@ -103,12 +103,15 @@ const insert = async (req, res) => {
         kota_magang: internship.kota_magang,
         tanggal_mulai: internship.tanggal_mulai,
         tanggal_selesai: internship.tanggal_selesai,
-        bukti_magang: `${internship.npm}-${new Date().toLocaleDateString().replace(/\//g, '')}-${internshipReport.name.replace(/ /g, '')}`,
+        bukti_magang: `${internship.npm}-${new Date().toLocaleDateString().replace(/\//g, '')}-${fileInternship.name.replace(/ /g, '')}`,
         laporan_magang: `${internship.npm}-${new Date().toLocaleDateString().replace(/\//g, '')}-${internshipReport.name.replace(/ /g, '')}`
       })
     return responseHelper.responseOk(newInternship, 'Successfully add internship', res)
   } catch (err) {
     console.log(err)
+    if (err.message === 'You haven\'t selected a file') {
+      return responseHelper.responseBadRequest('', 'You haven\'t selected a file', res)
+    }
     if (err.message === 'Student already') {
       return responseHelper.responseBadRequest('', 'Student already', res)
     }
@@ -162,7 +165,7 @@ const update = async (req, res) => {
         tanggal_mulai: internship.tanggal_mulai,
         tanggal_selesai: internship.tanggal_selesai,
         bukti_magang: fileInternship
-          ? `${internship.npm}-${new Date().toLocaleDateString().replace(/\//g, '')}-${internshipReport.name.replace(/ /g, '')}`
+          ? `${internship.npm}-${new Date().toLocaleDateString().replace(/\//g, '')}-${fileInternship.name.replace(/ /g, '')}`
           : internshipIsExist[0].BUKTI_MAGANG,
         laporan_magang: internshipReport
           ? `${internship.npm}-${new Date().toLocaleDateString().replace(/\//g, '')}-${internshipReport.name.replace(/ /g, '')}`
@@ -172,7 +175,7 @@ const update = async (req, res) => {
     fileInternship &&
     uploadHelper({
       file: fileInternship,
-      filename: `${internship.npm}-${new Date().toLocaleDateString().replace(/\//g, '')}-${internshipReport.name.replace(/ /g, '')}`,
+      filename: `${internship.npm}-${new Date().toLocaleDateString().replace(/\//g, '')}-${fileInternship.name.replace(/ /g, '')}`,
       dir: 'bukti_magang'
     })
     internshipReport &&
