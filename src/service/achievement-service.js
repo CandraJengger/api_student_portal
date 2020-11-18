@@ -4,18 +4,25 @@ const { isExist: studentExist } = require('./student-account-service')
 const { upload: uploadHelper, removeFromDir } = require('../helper/upload-helper')
 
 const isExist = async (id) => {
-  const skillsResult = await AchievementModel
+  const achievementResult = await AchievementModel
     .query()
     .where('kode_prestasi', '=', id)
-  return skillsResult
+  return achievementResult
+}
+
+const npmIsExist = async (npm) => {
+  const achievementResult = await AchievementModel
+    .query()
+    .where('npm', '=', npm)
+  return achievementResult
 }
 
 const findAll = async (req, res) => {
   try {
-    const skillsResult = await AchievementModel
+    const achievementResult = await AchievementModel
       .query()
       .orderBy('npm', 'ASC')
-    return responseHelper.responseOk(skillsResult, 'Success', res)
+    return responseHelper.responseOk(achievementResult, 'Success', res)
   } catch (err) {
     return responseHelper.responseNotFound('', 'Error Not Found', res)
   }
@@ -23,9 +30,9 @@ const findAll = async (req, res) => {
 
 const findById = async (req, res) => {
   try {
-    let { achievement } = req.body
+    let { npm: achievement } = req.params
     achievement = JSON.parse(achievement)
-    const achievementResult = await isExist(achievement.kode_prestasi)
+    const achievementResult = await npmIsExist(achievement)
     if (achievementResult.length === 0) {
       throw new Error('Not found')
     }
@@ -71,12 +78,12 @@ const insert = async (req, res) => {
         kode_prestasi: achievement.kode_prestasi,
         npm: achievement.npm,
         tahun_prestasi: achievement.tahun_prestasi,
-        juara: 1,
+        juara: achievement.juara,
         jenis_prestasi: achievement.jenis_prestasi,
         tingkat_prestasi: achievement.tingkat_prestasi,
         bukti_prestasi: `${achievement.npm}-${new Date().toLocaleDateString().replace(/\//g, '')}-${fileAchievement.name.replace(/ /g, '')}`
       })
-    return responseHelper.responseOk(newAchiement, 'Successfully add skills', res)
+    return responseHelper.responseOk(newAchiement, 'Successfully add achievement', res)
   } catch (err) {
     console.log(err)
     if (err.message === 'You haven\'t selected a file') {
@@ -125,7 +132,7 @@ const update = async (req, res) => {
         kode_prestasi: achievement.kode_prestasi,
         npm: achievement.npm,
         tahun_prestasi: achievement.tahun_prestasi,
-        juara: 1,
+        juara: achievement.juara,
         jenis_prestasi: achievement.jenis_prestasi,
         tingkat_prestasi: achievement.tingkat_prestasi,
         bukti_prestasi: fileAchievement

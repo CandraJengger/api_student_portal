@@ -21,8 +21,8 @@ const findAll = async (req, res) => {
 
 const findById = async (req, res) => {
   try {
-    const { courses } = req.body
-    const coursesResult = await isExist(courses.kode_mk)
+    const { id: courses } = req.params
+    const coursesResult = await isExist(courses)
     if (coursesResult.length === 0) {
       throw new Error('Not found')
     }
@@ -47,6 +47,7 @@ const insert = async (req, res) => {
       .insert({
         kode_mk: courses.kode_mk,
         nama_mk: courses.nama_mk,
+        jenis_mk: courses.jenis_mk,
         sks: courses.sks
       })
     return responseHelper.responseOk(newCourses, 'Successfully add courses', res)
@@ -72,6 +73,7 @@ const update = async (req, res) => {
       .patch({
         kode_mk: courses.kode_mk,
         nama_mk: courses.nama_mk,
+        jenis_mk: courses.jenis_mk,
         sks: courses.sks
       })
     return responseHelper.responseOk(coursesResult, 'Successfully update courses', res)

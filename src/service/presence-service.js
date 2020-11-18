@@ -10,6 +10,21 @@ const isExist = async (id) => {
   return presenceResult
 }
 
+const npmIsExist = async (npm) => {
+  const npmResult = await PresenceModel
+    .query()
+    .where('npm_presensi', '=', npm)
+  return npmResult
+}
+
+const weekSearch = async (npm, week) => {
+  const weekResult = await PresenceModel
+    .query()
+    .where('npm_presensi', '=', npm)
+    .where('minggu_presensi', '=', week)
+  return weekResult
+}
+
 const findAll = async (req, res) => {
   try {
     const presenceResult = await PresenceModel
@@ -23,8 +38,36 @@ const findAll = async (req, res) => {
 
 const findById = async (req, res) => {
   try {
-    const { presence } = req.body
-    const presenceResult = await isExist(presence.id_presensi)
+    const { presence } = req.params
+    const presenceResult = await isExist(presence)
+    if (presenceResult.length === 0) {
+      throw new Error('Not found')
+    }
+
+    return responseHelper.responseOk(presenceResult, 'Success', res)
+  } catch (err) {
+    return responseHelper.responseNotFound('', 'Presence not found', res)
+  }
+}
+
+const findByNPM = async (req, res) => {
+  try {
+    const { npm: presence } = req.params
+    const presenceResult = await npmIsExist(presence)
+    if (presenceResult.length === 0) {
+      throw new Error('Not found')
+    }
+
+    return responseHelper.responseOk(presenceResult, 'Success', res)
+  } catch (err) {
+    return responseHelper.responseNotFound('', 'Presence not found', res)
+  }
+}
+
+const findByWeek = async (req, res) => {
+  try {
+    const { npm, week } = req.params
+    const presenceResult = await weekSearch(npm, week)
     if (presenceResult.length === 0) {
       throw new Error('Not found')
     }
@@ -147,6 +190,8 @@ module.exports = {
   isExist,
   findAll,
   findById,
+  findByNPM,
+  findByWeek,
   insert,
   update,
   destroy

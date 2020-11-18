@@ -4,6 +4,9 @@ const StudentStatusModel = require('./StudentStatusModel')
 const GraduationModel = require('./GraduationModel')
 const InternshipModel = require('./InternshipModel')
 const AchievementModel = require('./AchievementModel')
+const ILModel = require('./InternationalLanguageModel')
+const OrgModel = require('./OrganizationModel')
+const StudentProfileModel = require('./StudentProfileModel')
 
 Model.knex(knex)
 
@@ -44,6 +47,30 @@ class StudentAccountModel extends Model {
         join: {
           from: 't_akun_mhs.npm',
           to: 't_prestasi.npm'
+        }
+      },
+      organizations: {
+        relation: Model.HasManyRelation,
+        modelClass: OrgModel,
+        join: {
+          from: 't_akun_mhs.npm',
+          to: 't_organisasi.npm'
+        }
+      },
+      internationalLanguages: {
+        relation: Model.HasManyRelation,
+        modelClass: ILModel,
+        join: {
+          from: 't_akun_mhs.npm',
+          to: 't_b_internasional.npm'
+        }
+      },
+      studentsProfile: {
+        relation: Model.HasManyRelation,
+        modelClass: StudentProfileModel,
+        join: {
+          from: 't_akun_mhs.npm',
+          to: 't_profil_mhs.npm'
         }
       }
     }

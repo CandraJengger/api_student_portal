@@ -10,6 +10,13 @@ const isExist = async (id) => {
   return skillsResult
 }
 
+const npmIsExist = async (npm) => {
+  const skillsResult = await SkillsModel
+    .query()
+    .where('npm', '=', npm)
+  return skillsResult
+}
+
 const findAll = async (req, res) => {
   try {
     const skillsResult = await SkillsModel
@@ -23,9 +30,9 @@ const findAll = async (req, res) => {
 
 const findById = async (req, res) => {
   try {
-    let { skills } = req.body
+    let { npm: skills } = req.params
     skills = JSON.parse(skills)
-    const skillsResult = await isExist(skills.kode_keterampilan)
+    const skillsResult = await npmIsExist(skills)
     if (skillsResult.length === 0) {
       throw new Error('Not found')
     }

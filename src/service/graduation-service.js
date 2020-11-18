@@ -9,6 +9,13 @@ const isExist = async (id) => {
   return graduationResult
 }
 
+const npmIsExist = async (npm) => {
+  const graduationResult = await GraduationModel
+    .query()
+    .where('npm', '=', npm)
+  return graduationResult
+}
+
 const studentInTheClass = async (npm) => {
   const studentResult = await GraduationModel
     .query()
@@ -29,8 +36,8 @@ const findAll = async (req, res) => {
 
 const findById = async (req, res) => {
   try {
-    const { graduation } = req.body
-    const graduationResult = await isExist(graduation.id_wisuda)
+    const { npm: graduation } = req.params
+    const graduationResult = await npmIsExist(graduation)
     if (graduationResult.length === 0) {
       throw new Error('Not found')
     }

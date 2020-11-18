@@ -21,8 +21,8 @@ const findAll = async (req, res) => {
 
 const findById = async (req, res) => {
   try {
-    const { classLectures } = req.body
-    const classResult = await isExist(classLectures.kode_kelas)
+    const { id: classLectures } = req.params
+    const classResult = await isExist(classLectures)
     if (classResult.length === 0) {
       throw new Error('Not found')
     }

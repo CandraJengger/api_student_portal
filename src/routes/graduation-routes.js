@@ -3,7 +3,7 @@ const r = Router()
 const graduationService = require('../service/graduation-service')
 
 r.get('/', graduationService.findAll)
-r.post('/', graduationService.findById)
+r.get('/:npm', graduationService.findById)
 r.post('/add', graduationService.insert)
 r.put('/update', graduationService.update)
 r.delete('/delete', graduationService.destroy)

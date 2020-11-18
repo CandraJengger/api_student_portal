@@ -22,8 +22,8 @@ const findAll = async (req, res) => {
 
 const findById = async (req, res) => {
   try {
-    const { announcement } = req.body
-    const announcementResult = await isExist(announcement.id_pengumuman)
+    const { id: announcement } = req.params
+    const announcementResult = await isExist(announcement)
     if (announcementResult.length === 0) {
       throw new Error('Not found')
     }
@@ -56,7 +56,7 @@ const insert = async (req, res) => {
         judul_pengumuman: announcement.judul_pengumuman,
         isi_pengumuman: announcement.isi_pengumuman,
         tanggal_pengumuman: new Date().toLocaleDateString(),
-        kategori_pengumuman: announcement.ketegori_pengumuman,
+        kategori_pengumuman: announcement.kategori_pengumuman,
         pengirim_pengumuman: announcement.pengirim_pengumuman
       })
     return responseHelper.responseOk(newAnnouncement, 'Successfully add announcement', res)
@@ -94,7 +94,7 @@ const update = async (req, res) => {
         judul_pengumuman: announcement.judul_pengumuman,
         isi_pengumuman: announcement.isi_pengumuman,
         tanggal_pengumuman: new Date().toLocaleDateString(),
-        kategori_pengumuman: announcement.ketegori_pengumuman,
+        kategori_pengumuman: announcement.kategori_pengumuman,
         pengirim_pengumuman: announcement.pengirim_pengumuman
       })
     return responseHelper.responseOk(announcementResult, 'Successfully update announcement', res)

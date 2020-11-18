@@ -66,7 +66,7 @@ const findAll = async (req, res) => {
 
 const findById = async (req, res) => {
   try {
-    let { reRegistration } = req.body
+    let { reRegistration } = req.params
     reRegistration = JSON.parse(reRegistration)
     const reRegistrationResult = await isExist(reRegistration.id_daftar_ulang)
     if (reRegistrationResult.length === 0) {
@@ -80,11 +80,11 @@ const findById = async (req, res) => {
 }
 
 const findByNPM = async (req, res) => {
-  const baseUrl = `${process.env.APP_HOST}:${process.env.APP_PORT}/reRegistrations/krs/`
+  const baseUrl = `${process.env.APP_HOST}:${process.env.APP_PORT}/reRegistrations/krs/file/`
   const directoryPath = path.resolve(__dirname, '../../public/uploads/krs/')
   let krsFiles = []
   try {
-    let { reRegistration } = req.body
+    let { npm: reRegistration } = req.params
     reRegistration = JSON.parse(reRegistration)
 
     fs.readdir(directoryPath, (err, files) => {
@@ -92,10 +92,10 @@ const findByNPM = async (req, res) => {
         throw new Error('Unable to scan files')
       }
 
-      krsFiles = files.filter(file => file.includes(`${reRegistration.npm_daftar_ulang}`))
+      krsFiles = files.filter(file => file.includes(`${reRegistration}`))
     })
 
-    const reRegistrationResult = await studentAlready(reRegistration.npm_daftar_ulang)
+    const reRegistrationResult = await studentAlready(reRegistration)
     if (reRegistrationResult.length === 0) {
       throw new Error('Not found')
     }

@@ -21,8 +21,8 @@ const findAll = async (req, res) => {
 
 const findById = async (req, res) => {
   try {
-    const { batch } = req.body
-    const batchResult = await isExist(batch.kode_angkatan)
+    const { id: batch } = req.params
+    const batchResult = await isExist(batch)
     if (batchResult.length === 0) {
       throw new Error('Not found')
     }

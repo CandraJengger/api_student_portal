@@ -6,6 +6,7 @@ const UKTModel = require('./UKTModel')
 const ReRegistrationModel = require('./Re-registrationModel')
 const AnnouncementModel = require('./AnnouncementModel')
 const QuestionnaireModel = require('./QuestionnaireModel')
+const ValueCoursesModel = require('./ValueCoursesModel')
 
 Model.knex(knex)
 
@@ -62,6 +63,14 @@ class AdminAccountModel extends Model {
         join: {
           from: 't_admin.id_admin',
           to: 't_kuesioner.id_admin'
+        }
+      },
+      values: {
+        relation: Model.HasManyRelation,
+        modelClass: ValueCoursesModel,
+        join: {
+          from: 't_admin.id_admin',
+          to: 't_nilai.id_admin'
         }
       }
     }

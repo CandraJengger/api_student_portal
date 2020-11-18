@@ -22,8 +22,8 @@ const findAll = async (req, res) => {
 
 const findById = async (req, res) => {
   try {
-    const { majoring } = req.body
-    const majoringResult = await isExist(majoring.id_jurusan)
+    const { id: majoring } = req.params
+    const majoringResult = await isExist(majoring)
     if (majoringResult.length === 0) {
       throw new Error('Not found')
     }

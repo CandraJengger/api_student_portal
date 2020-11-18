@@ -10,6 +10,13 @@ const isExist = async (id) => {
   return internshipResult
 }
 
+const npmIsExist = async (npm) => {
+  const internshipResult = await InternshipModel
+    .query()
+    .where('npm', '=', npm)
+  return internshipResult
+}
+
 const studentInList = async (npm) => {
   const studentResult = await InternshipModel
     .query()
@@ -30,8 +37,8 @@ const findAll = async (req, res) => {
 
 const findById = async (req, res) => {
   try {
-    const { internship } = req.body
-    const internshipResult = await isExist(internship.kode_magang)
+    const { npm: internship } = req.params
+    const internshipResult = await npmIsExist(internship)
     if (internshipResult.length === 0) {
       throw new Error('Not found')
     }

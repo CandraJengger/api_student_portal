@@ -21,8 +21,8 @@ const findAll = async (req, res) => {
 
 const findById = async (req, res) => {
   try {
-    const { semester } = req.body
-    const semesterResult = await isExist(semester.kode_semester)
+    const { id: semester } = req.params
+    const semesterResult = await isExist(semester)
     if (semesterResult.length === 0) {
       throw new Error('Not found')
     }

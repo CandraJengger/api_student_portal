@@ -3,7 +3,7 @@ const r = Router()
 const buildingService = require('../service/building-service')
 
 r.get('/', buildingService.findAll)
-r.post('/', buildingService.findById)
+r.get('/:buildingCode', buildingService.findById)
 r.post('/add', buildingService.insert)
 r.put('/update', buildingService.update)
 r.delete('/delete', buildingService.destroy)

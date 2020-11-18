@@ -23,6 +23,11 @@ const graduationRoutes = require('./graduation-routes')
 const internshipRoutes = require('./internship-routes')
 const skillsRoutes = require('./skills-routes')
 const achievementRoutes = require('./achievement-routes')
+const orgRoutes = require('./organization-routes')
+const ilRotes = require('./international-language-routes')
+const parentsRoutes = require('./parents-routes')
+const spRoutes = require('./student-profile-routes')
+const vcRoutes = require('./value-courses-routes')
 
 const routes = app => {
   app.use('/uploads', express.static('../../public/uploads'))
@@ -50,6 +55,11 @@ const routes = app => {
   app.use('/internship', internshipRoutes)
   app.use('/skills', skillsRoutes)
   app.use('/achievement', achievementRoutes)
+  app.use('/organizations', orgRoutes)
+  app.use('/internationalLanguages', ilRotes)
+  app.use('/parents', parentsRoutes)
+  app.use('/studentProfile', spRoutes)
+  app.use('/valueCourses', vcRoutes)
 }
 
 module.exports = routes

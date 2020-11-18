@@ -21,8 +21,8 @@ const findAll = async (req, res) => {
 
 const findById = async (req, res) => {
   try {
-    const { building } = req.body
-    const buildingResult = await isExist(building.kode_gedung)
+    const { buildingCode: building } = req.params
+    const buildingResult = await isExist(building)
     if (buildingResult.length === 0) {
       throw new Error('Not found')
     }

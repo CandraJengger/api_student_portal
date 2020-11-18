@@ -3,7 +3,7 @@ const r = Router()
 const achievementService = require('../service/achievement-service')
 
 r.get('/', achievementService.findAll)
-r.post('/', achievementService.findById)
+r.get('/:npm', achievementService.findById)
 r.post('/add', achievementService.insert)
 r.put('/update', achievementService.update)
 r.delete('/delete', achievementService.destroy)

@@ -31,8 +31,8 @@ const findAll = async (req, res) => {
 
 const findById = async (req, res) => {
   try {
-    const { ukt } = req.body
-    const uktResult = await isExist(ukt.kode_ukt)
+    const { npm: ukt } = req.params
+    const uktResult = await studentHaveUKT(ukt)
     if (uktResult.length === 0) {
       throw new Error('Not found')
     }
