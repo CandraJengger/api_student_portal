@@ -9,13 +9,23 @@ const isExist = async (id) => {
   return adminAccountResult
 }
 
-let encryptionPassword = ''
+const findByUsername = async (username) => {
+  const adminAccountResult = await AdminAccountModel
+    .query()
+    .where('username_admin', '=', username)
+  return adminAccountResult
+}
 
 const findAll = async (req, res) => {
   try {
-    const adminAccountsResult = await AdminAccountModel
+    let adminAccountsResult = await AdminAccountModel
       .query()
       .orderBy('nama_admin', 'ASC')
+
+    adminAccountsResult = adminAccountsResult.map(admin => {
+      admin.PASSWORD_ADMIN = hashHelper.generateHash(admin.PASSWORD_ADMIN)
+      return admin
+    })
     return responseHelper.responseOk(adminAccountsResult, 'Success', res)
   } catch (err) {
     return responseHelper.responseNotFound('', 'Admin Account not found', res)
@@ -25,11 +35,15 @@ const findAll = async (req, res) => {
 const findById = async (req, res) => {
   try {
     const { adminAccount } = req.body
-    const adminAccountResult = await isExist(adminAccount.id_admin)
+    let adminAccountResult = await isExist(adminAccount.id_admin)
     if (adminAccountResult.length === 0) {
       throw new Error('Not found')
     }
 
+    adminAccountResult = adminAccountResult.map(admin => {
+      admin.PASSWORD_ADMIN = hashHelper.generateHash(admin.PASSWORD_ADMIN)
+      return admin
+    })
     return responseHelper.responseOk(adminAccountResult, 'Success', res)
   } catch (err) {
     return responseHelper.responseNotFound('', 'Admin Account not found', res)
@@ -45,8 +59,6 @@ const insert = async (req, res) => {
       throw new Error('Exist')
     }
 
-    encryptionPassword = hashHelper.generateHash(adminAccount.password_admin)
-
     const newAdminAccount = await AdminAccountModel
       .query()
       .insert({
@@ -54,7 +66,7 @@ const insert = async (req, res) => {
         nama_admin: adminAccount.nama_admin,
         username_admin: adminAccount.username_admin,
         alamat_admin: adminAccount.alamat_admin,
-        password_admin: encryptionPassword,
+        password_admin: adminAccount.password_admin,
         email_admin: adminAccount.email_admin,
         status_admin: adminAccount.status_admin
       })
@@ -75,8 +87,6 @@ const update = async (req, res) => {
       throw new Error('Not found')
     }
 
-    encryptionPassword = hashHelper.generateHash(adminAccount.password_admin)
-
     const adminAccountResult = await AdminAccountModel
       .query()
       .where('id_admin', '=', adminAccount.id_admin)
@@ -85,7 +95,7 @@ const update = async (req, res) => {
         nama_admin: adminAccount.nama_admin,
         username_admin: adminAccount.username_admin,
         alamat_admin: adminAccount.alamat_admin,
-        password_admin: encryptionPassword,
+        password_admin: adminAccount.password_admin,
         email_admin: adminAccount.email_admin,
         status_admin: adminAccount.status_admin
       })
@@ -112,6 +122,7 @@ const destroy = async (req, res) => {
       .where('id_admin', '=', adminAccount.id_admin)
     return responseHelper.responseOk(adminAccountResult, 'Successfully delete admin account', res)
   } catch (err) {
+    console.log(err)
     return responseHelper.responseNotFound('', 'Admin Account not found', res)
   }
 }
@@ -122,5 +133,6 @@ module.exports = {
   findById,
   insert,
   update,
-  destroy
+  destroy,
+  findByUsername
 }

@@ -1,10 +1,13 @@
-// const HashHelper = require('./helper/hash-helper')
+const HashHelper = require('./src/helper/hash-helper')
 
-// const result = HashHelper.generateHash('12345')
+const result = HashHelper.generateHash('123')
 
-// const resultCompare = HashHelper.compareHash('12345', result)
+const b = require('bcrypt')
 
-// console.log(resultCompare)
+console.log(b.hashSync('123', 10))
+const resultCompare = HashHelper.compareHash('123', result)
+
+console.log(resultCompare)
 // console.log()
 
 // const fs = require('fs')
@@ -21,3 +24,8 @@
 //     console.log('berhasil dihapus')
 //   })
 // })
+
+// const auth = require('./src/helper/auth-helper')
+// const decode = auth.verify('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJOUE0iOjE5MzMwNzAxMCwiU1RBVFVTX01IUyI6IlRpZGFrIEFrdGlmIiwiaWF0IjoxNjA1NzU4NzI4fQ.txFS0eyWBKT9w_98UlCKRKoN4laum9rXBy9DyYJvrjU')
+
+// console.log(decode)

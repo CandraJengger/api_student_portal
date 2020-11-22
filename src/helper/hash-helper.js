@@ -1,17 +1,12 @@
 const bcrypt = require('bcrypt')
-const saltRounds = 10
 
 const HashHelper = {
   generateHash (password) {
-    return bcrypt.hashSync(password, this._generateSalt())
+    return bcrypt.hashSync(password, 10)
   },
 
   compareHash (password, hash) {
     return bcrypt.compareSync(password, hash)
-  },
-
-  _generateSalt () {
-    return bcrypt.genSaltSync(saltRounds)
   }
 }
 

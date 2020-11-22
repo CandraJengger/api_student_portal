@@ -7,5 +7,6 @@ r.post('/', studentAccountService.findById)
 r.post('/add', studentAccountService.insert)
 r.put('/update', studentAccountService.update)
 r.delete('/delete', studentAccountService.destroy)
+r.put('/activation', studentAccountService.activation)
 
 module.exports = r

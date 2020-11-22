@@ -101,7 +101,7 @@ const insert = async (req, res) => {
         id_presensi: presence.id_presensi,
         id_admin: presence.id_admin,
         minggu_presensi: presence.minggu_presensi,
-        tanggal_presensi: new Date().toLocaleDateString(),
+        tanggal_presensi: presence.tanggal_presensi,
         keterangan_presensi: presence.keterangan_presensi,
         npm_presensi: presence.npm_presensi,
         total_jam: presence.total_jam
@@ -128,7 +128,6 @@ const update = async (req, res) => {
     const presenceIsExist = await isExist(presence.id_presensi)
     const adminIsExist = await adminExist(presence.id_admin)
     const studentIsExist = await studentExist(presence.npm_presensi)
-    const date = new Date()
 
     if (adminIsExist.length === 0) {
       throw new Error('Admin not found')
@@ -147,7 +146,7 @@ const update = async (req, res) => {
         id_presensi: presence.id_presensi,
         id_admin: presence.id_admin,
         minggu_presensi: presence.minggu_presensi,
-        tanggal_presensi: date.toLocaleDateString(),
+        tanggal_presensi: presence.tanggal_presensi,
         keterangan_presensi: presence.keterangan_presensi,
         npm_presensi: presence.npm_presensi,
         total_jam: presence.total_jam

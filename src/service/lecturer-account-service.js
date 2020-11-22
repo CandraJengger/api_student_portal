@@ -9,13 +9,16 @@ const isExist = async (id) => {
   return lecturerAccountResult
 }
 
-let encryptionPassword = ''
-
 const findAll = async (req, res) => {
   try {
-    const lecturerAccountsResult = await LecturerModel
+    let lecturerAccountsResult = await LecturerModel
       .query()
       .orderBy('nama_dosen', 'ASC')
+
+    lecturerAccountsResult = lecturerAccountsResult.map(lecturer => {
+      lecturer.PASSWORD_DOSEN = hashHelper.generateHash(lecturer.PASSWORD_DOSEN)
+      return lecturer
+    })
     return responseHelper.responseOk(lecturerAccountsResult, 'Success', res)
   } catch (err) {
     return responseHelper.responseNotFound('', 'Lecturer Account not found', res)
@@ -25,11 +28,15 @@ const findAll = async (req, res) => {
 const findById = async (req, res) => {
   try {
     const { lecturerAccount } = req.body
-    const lecturerAccountResult = await isExist(lecturerAccount.NIP_dosen)
+    let lecturerAccountResult = await isExist(lecturerAccount.NIP_dosen)
     if (lecturerAccountResult.length === 0) {
       throw new Error('Not found')
     }
 
+    lecturerAccountResult = lecturerAccountResult.map(lecturer => {
+      lecturer.PASSWORD_DOSEN = hashHelper.generateHash(lecturer.PASSWORD_DOSEN)
+      return lecturer
+    })
     return responseHelper.responseOk(lecturerAccountResult, 'Success', res)
   } catch (err) {
     return responseHelper.responseNotFound('', 'Lecturer Account not found', res)

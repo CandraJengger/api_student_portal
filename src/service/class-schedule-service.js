@@ -24,8 +24,8 @@ const findAll = async (req, res) => {
 
 const findById = async (req, res) => {
   try {
-    const { classSchedule } = req.body
-    const scheduleResult = await isExist(classSchedule.kode_jadwal)
+    const { code: classSchedule } = req.params
+    const scheduleResult = await isExist(classSchedule)
     if (scheduleResult.length === 0) {
       throw new Error('Not found')
     }

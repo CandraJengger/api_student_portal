@@ -31,6 +31,7 @@ const findAll = async (req, res) => {
 
 const findById = async (req, res) => {
   try {
+    console.log(req.context.user)
     const { npm: ukt } = req.params
     const uktResult = await studentHaveUKT(ukt)
     if (uktResult.length === 0) {
