@@ -9,6 +9,13 @@ const isExist = async (id) => {
   return announcementResult
 }
 
+const queryCategory = async (category) => {
+  const announcementResult = await AnnouncementModel
+    .query()
+    .where('kategori_pengumuman', '=', category)
+  return announcementResult
+}
+
 const findAll = async (req, res) => {
   try {
     const announcementResult = await AnnouncementModel
@@ -17,6 +24,20 @@ const findAll = async (req, res) => {
     return responseHelper.responseOk(announcementResult, 'Success', res)
   } catch (err) {
     return responseHelper.responseNotFound('', 'Error Not Found', res)
+  }
+}
+
+const findByCategory = async (req, res) => {
+  try {
+    const { category: announcement } = req.params
+    const announcementResult = await queryCategory(announcement)
+    if (announcementResult.length === 0) {
+      throw new Error('Not found')
+    }
+
+    return responseHelper.responseOk(announcementResult, 'Success', res)
+  } catch (err) {
+    return responseHelper.responseNotFound('', 'Announcement not found', res)
   }
 }
 
@@ -132,6 +153,7 @@ module.exports = {
   isExist,
   findAll,
   findById,
+  findByCategory,
   insert,
   update,
   destroy

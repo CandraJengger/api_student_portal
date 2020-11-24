@@ -5,6 +5,7 @@ const authService = require('../service/auth-service')
 
 r.post('/admin/login', authService.loginAdmin)
 r.get('/admin/logout', middleware.authenticate, authService.logout)
+r.get('/student/logout', middleware.authenticate, authService.logout)
 r.post('/student/login', authService.loginStudent)
 
 module.exports = r

@@ -48,6 +48,20 @@ const findById = async (req, res) => {
   }
 }
 
+const findByNPM = async (req, res) => {
+  try {
+    const { npm: studentStatus } = req.params
+    const studentStatusResult = await studentInTheClass(studentStatus)
+    if (studentStatusResult.length === 0) {
+      throw new Error('Not found')
+    }
+
+    return responseHelper.responseOk(studentStatusResult, 'Success', res)
+  } catch (err) {
+    return responseHelper.responseNotFound('', 'Student Status not found', res)
+  }
+}
+
 const insert = async (req, res) => {
   try {
     const { studentStatus } = req.body
@@ -228,6 +242,7 @@ module.exports = {
   isExist,
   findAll,
   findById,
+  findByNPM,
   insert,
   update,
   destroy

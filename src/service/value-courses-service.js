@@ -28,6 +28,15 @@ const studentHaveCourses = async (npm, mk) => {
   return studentResult
 }
 
+const studentInSemester = async (npm, semester) => {
+  const studentResult = await ValueCoursesModel
+    .query()
+    .where('npm_nilai', '=', npm)
+    .where('kode_semester_nilai', '=', semester)
+
+  return studentResult
+}
+
 const findAll = async (req, res) => {
   try {
     const vcResult = await ValueCoursesModel
@@ -49,6 +58,58 @@ const findById = async (req, res) => {
     }
 
     return responseHelper.responseOk(vcResult, 'Success', res)
+  } catch (err) {
+    return responseHelper.responseNotFound('', 'Student not found', res)
+  }
+}
+
+const findByCourses = async (req, res) => {
+  try {
+    const { npm, courses } = req.params
+    const vcResult = await studentHaveCourses(npm, courses)
+    if (vcResult.length === 0) {
+      throw new Error('Not found')
+    }
+
+    return responseHelper.responseOk(vcResult, 'Success', res)
+  } catch (err) {
+    return responseHelper.responseNotFound('', 'Student not found', res)
+  }
+}
+
+const IPS = async (req, res) => {
+  try {
+    const { npm, semester } = req.params
+    const vcResult = await studentInSemester(npm, semester)
+    if (vcResult.length === 0) {
+      throw new Error('Not found')
+    }
+
+    const ipsResult = vcResult.map(item => item.NILAI).reduce((acc, cur) => acc + cur)
+
+    return responseHelper.responseOk({
+      npm,
+      IPS: ipsResult
+    }, 'Success', res)
+  } catch (err) {
+    return responseHelper.responseNotFound('', 'Student not found', res)
+  }
+}
+
+const IPK = async (req, res) => {
+  try {
+    const { npm } = req.params
+    const vcResult = await npmIsExist(npm)
+    if (vcResult.length === 0) {
+      throw new Error('Not found')
+    }
+
+    const ipsResult = vcResult.map(item => item.NILAI).reduce((acc, cur) => acc + cur)
+
+    return responseHelper.responseOk({
+      npm,
+      IPK: ipsResult
+    }, 'Success', res)
   } catch (err) {
     return responseHelper.responseNotFound('', 'Student not found', res)
   }
@@ -221,6 +282,9 @@ module.exports = {
   isExist,
   findAll,
   findById,
+  findByCourses,
+  IPS,
+  IPK,
   insert,
   update,
   destroy
