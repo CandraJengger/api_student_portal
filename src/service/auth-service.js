@@ -3,6 +3,7 @@ const hashHelper = require('../helper/hash-helper')
 const auth = require('../helper/auth-helper')
 const { findByUsername: adminIsExist } = require('./admin-account-service')
 const { isExist: studentIsExist } = require('./student-account-service')
+const { emailIsExist } = require('./lecturer-account-service')
 
 const loginAdmin = async (req, res) => {
   try {
@@ -52,8 +53,36 @@ const loginStudent = async (req, res) => {
       return responseHelper.responseNotFound('', 'Student not found', res)
     }
 
-    const tokenstudent = auth.signAdmin(student[0])
+    const tokenstudent = auth.signStudent(student[0])
     return res.json({ token: tokenstudent })
+  } catch (err) {
+    console.log(err)
+    return responseHelper.responseForbidden('', 'unauthenticated', res)
+  }
+}
+
+const loginLecturer = async (req, res) => {
+  try {
+    const { email, password } = req.body
+
+    if (!email || !password) {
+      return responseHelper.responseNotFound('', 'Lecturer not found', res)
+    }
+
+    const lecturer = await emailIsExist(email)
+    let encrytionPassword = ''
+    if (lecturer[0] !== undefined) {
+      encrytionPassword = hashHelper.generateHash(lecturer[0].PASSWORD_DOSEN)
+    }
+    if (!hashHelper.compareHash(password, encrytionPassword)) {
+      return responseHelper.responseNotFound('', 'Lecturer not found', res)
+    }
+    if (!lecturer[0]) {
+      return responseHelper.responseNotFound('', 'Lecturer not found', res)
+    }
+
+    const tokenLecturer = auth.signLecturer(lecturer[0])
+    return res.json({ token: tokenLecturer })
   } catch (err) {
     console.log(err)
     return responseHelper.responseForbidden('', 'unauthenticated', res)
@@ -78,5 +107,6 @@ const logout = async (req, res) => {
 module.exports = {
   loginAdmin,
   loginStudent,
+  loginLecturer,
   logout
 }

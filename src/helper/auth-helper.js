@@ -11,6 +11,24 @@ const signAdmin = user => {
   return jwt.sign({ ...user }, secretKey)
 }
 
+const signStudent = user => {
+  if (user.PASSWORD_MHS) {
+    delete user.PASSWORD_MHS
+  }
+
+  console.log({ ...user })
+  return jwt.sign({ ...user }, secretKey)
+}
+
+const signLecturer = user => {
+  if (user.PASSWORD_DOSEN) {
+    delete user.PASSWORD_DOSEN
+  }
+
+  console.log({ ...user })
+  return jwt.sign({ ...user }, secretKey)
+}
+
 const verify = token => {
   try {
     return jwt.verify(token, secretKey)
@@ -21,5 +39,8 @@ const verify = token => {
 }
 
 module.exports = {
-  signAdmin, verify
+  signAdmin,
+  signStudent,
+  signLecturer,
+  verify
 }

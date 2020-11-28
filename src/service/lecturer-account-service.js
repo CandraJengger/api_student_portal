@@ -9,6 +9,13 @@ const isExist = async (id) => {
   return lecturerAccountResult
 }
 
+const emailIsExist = async (email) => {
+  const emailExist = await LecturerModel
+    .query()
+    .where('email_dosen', '=', email)
+  return emailExist
+}
+
 const findAll = async (req, res) => {
   try {
     let lecturerAccountsResult = await LecturerModel
@@ -52,14 +59,12 @@ const insert = async (req, res) => {
       throw new Error('Exist')
     }
 
-    encryptionPassword = hashHelper.generateHash(lecturerAccount.password_dosen)
-
     const newLecturerAccount = await LecturerModel
       .query()
       .insert({
         NIP_dosen: lecturerAccount.NIP_dosen,
         nama_dosen: lecturerAccount.nama_dosen,
-        password_dosen: encryptionPassword,
+        password_dosen: lecturerAccount.password_dosen,
         status_dosen: lecturerAccount.status_dosen,
         email_dosen: lecturerAccount.email_dosen
       })
@@ -80,15 +85,13 @@ const update = async (req, res) => {
       throw new Error('Not found')
     }
 
-    encryptionPassword = hashHelper.generateHash(lecturerAccount.password_dosen)
-
     const lecturerAccountResult = await LecturerModel
       .query()
       .where('NIP_dosen', '=', lecturerAccount.NIP_dosen)
       .patch({
         NIP_dosen: lecturerAccount.NIP_dosen,
         nama_dosen: lecturerAccount.nama_dosen,
-        password_dosen: encryptionPassword,
+        password_dosen: lecturerAccount.password_dosen,
         status_dosen: lecturerAccount.status_dosen,
         email_dosen: lecturerAccount.email_dosen
       })
@@ -123,6 +126,7 @@ module.exports = {
   isExist,
   findAll,
   findById,
+  emailIsExist,
   insert,
   update,
   destroy
